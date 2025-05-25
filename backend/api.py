@@ -4,12 +4,6 @@ import subprocess
 import json
 import os
 
-
-if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port)
-
-
 app = Flask(__name__)
 CORS(app)
 
@@ -24,7 +18,7 @@ def parse_maigret_output(output):
                 parts = line.split('[+]')[1].strip().split(':')
                 if len(parts) >= 2:
                     site = parts[0].strip()
-                    url = ':'.join(parts[1:]).strip()  # Handle URLs containing colons
+                    url = ':'.join(parts[1:]).strip()
                     results[site] = {'url': url}
         return results
 
@@ -45,14 +39,16 @@ def search_username():
             raise Exception(result.stderr.strip() or "Maigret failed")
 
         data = parse_maigret_output(result.stdout)
-        
+
         if not data:
             raise Exception("No valid results found in Maigret output")
-            
+
         return jsonify(data)
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+# Only needed when running locally
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
