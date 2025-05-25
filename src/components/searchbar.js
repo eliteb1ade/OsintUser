@@ -13,7 +13,7 @@ function SearchBar({ onResults, onSearchStart }) {
 
         try {
             const response = await fetch(
-                `http://localhost:5000/search?username=${encodeURIComponent(username)}`
+                `https://eliteb1ade.pythonanywhere.com/search?username=${encodeURIComponent(username)}`
             );
             
             const data = await response.json();
