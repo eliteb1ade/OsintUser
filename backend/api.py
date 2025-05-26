@@ -29,7 +29,7 @@ def search_username():
 
     try:
         result = subprocess.run(
-            ['maigret', username, '--timeout', '5', '--no-color'],
+            ['maigret', username, '--timeout', '5', '--no-color', '--json', '--no-progressbar'],
             capture_output=True,
             text=True
         )
