@@ -22,6 +22,10 @@ def parse_maigret_output(output):
                     results[site] = {'url': url}
         return results
 
+@app.route('/', methods=['GET'])
+def home():
+    return jsonify({'message': 'API is running! Use /search?username=...'})
+
 @app.route('/search', methods=['GET'])
 def search_username():
     username = request.args.get('username')
@@ -53,6 +57,4 @@ if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
 
-@app.route('/')
-def home():
-    return jsonify({'message': 'API is running! Use /search?username=...'})
+
